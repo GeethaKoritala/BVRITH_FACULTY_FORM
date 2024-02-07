@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>REGISTRATION FORM</title>
+    <link rel="icon" href="vishnu.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="func.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
+</head>
+<body>
+    <div class="header">
+        <img id = "logo" src="bvrith_logo.png" width="365px" height="120px">
+    </div>
+    <hr>
+    <div class="body" style="margin-left: 160px;">
+    <div class="profile-pic-div" style="height: 300px;width: 300px;margin-left: 10px;">
+        <img src="img1.png" id="photo"><br>
+        <input type="file" id="file" accept="image/jpeg">
+        <label for="file" id="uploadBtn" style="text-align: center;">Choose Photo</label>
+    </div>
+    <script>
+        const imgDiv = document.querySelector('.profile-pic-div');
+        const img = document.querySelector('#photo');
+        const file = document.querySelector('#file');
+        const uploadBtn = document.querySelector('#uploadBtn');
+
+        imgDiv.addEventListener('mouseenter', function() {
+            uploadBtn.style.display = "block"
+        });
+        imgDiv.addEventListener('mouseleave', function() {
+            uploadBtn.style.display = "none"
+        });
+        file.addEventListener('change', function() {
+            const choosedFile = this.files[0];
+            if (choosedFile) {
+                const reader = new FileReader();
+                reader.addEventListener('load', function() {
+                    img.setAttribute('src', reader.result);
+                });
+                reader.readAsDataURL(choosedFile);
+
+            }
+        })
+    </script>
+    <form style="margin-left: 200px;">
+        <fieldset>
+            <legend><h3>DETAILS:</h3>
+            <input class="textbox" type="text" placeholder="First Name" name="firstname">
+            <input class="textbox" type="text" placeholder="Last Name" name="lastname" style="margin-left: 10px;">
+            <br><br>
+            <select id="designation" class="textbox">
+                <option value="DESIGNATION">Designation</option>
+                <option value="Assistant Professor">Assistant Professor</option>
+                <option value="Associate Professor">Associate Professor</option>
+                <option value="Professor">Professor</option>
+            </select>
+            <br><br>
+                    
+            <select id="department" class="textbox">
+            <option  value="DEPARTMENT">Department</option>
+            <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+            <option value="Computer Science and Engineering(AI & ML)">Computer Science and Engineering(AI & ML)</option>
+            <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+            <option value="Electrical and Electronic Engineering">Electrical and Electronic Engineering</option>
+            <option value="Information Technology">Information Technology</option>
+            </select>
+            <br><br>
+            <input class="textbox" type="number" placeholder="Years Of Experience Teaching" name="yearsTeaching">
+            <br><br>
+            <input class="textbox" type="number" placeholder="Years Of Experience Research" name="yearsResearch">
+            <br>
+            <br>
+            <div class="input-icons">
+                <i class="fa fa-envelope" style="font-size: 1.5em; margin-left: 7px;margin-top: 3px;"></i>
+                <input class="input-field" type="text" placeholder="Mail" id="email" required>
+            </div>
+            <br>
+            <div class="input-icons">
+            <i class="fa fa-phone icon" style="font-size: 1.5em;"></i>
+            <input class="input-field" type="number" placeholder="Phone Number" id="phonenumber">
+        </div>
+            <br>
+            <br>
+        </fieldset>
+    </form>
+
+    <form><h3>AREAS OF SPECIALIZATION:</h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field1">
+                    <tr>
+                        <td><input type="text" name="name[]" placeholder="Enter Area Of Specialization" class="form-control name_list" /></td>
+                        <td><button type="button" name="add1" id="add1" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add1').click(function() {
+                i++;
+                $('#dynamic_field1').append('<tr id="row1' + i + '"><td><input type="text" name="name[]" placeholder="Enter Area Of Specialization" class="form-control name_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove1">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove1', function() {
+                var button_id = $(this).attr("id");
+                $('#row1' + button_id + '').remove();
+            });
+
+        });
+    </script>
+
+    <h3>DATE OF JOINING:</h3>
+    <input type="date" id="joinDate" name="joinDate" required>
+    <br><br>
+    <h3>EDUCATIONAL QUALIFICATIONS:</h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field2">
+                    <tr>
+                        <td><select name="QUALIFICATION[]" class="textbox" placeholder="Qualification">
+                                <option value="Qualification">Qualification</option>
+                                <option value="Doctoral Degree">Doctoral Degree</option>
+                                <option value="PG Degree">PG Degree</option>
+                                <option value="UG Degree">UG Degree</option>
+                            </select></td>
+                            <td><input class="textbox" type="text" placeholder="Degree Name" name="degree[]"></td>
+                        <td><input class="textbox" type="text" placeholder="University Name" name="university[]"></td>
+                        <td><button type="button" name="add2" id="add2" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            var J = 1;
+            $('#add2').click(function() {
+                J++;
+                $('#dynamic_field2').append('<tr id="row2' + J + '"><td><select name="QUALIFICATION[]" class="textbox" placeholder="Qualification"><option value="Qualification">Qualification</option><option value="Doctoral Degree">Doctoral Degree</option><option value="PG Degree">PG Degree</option><option value="UG Degree">UG Degree</option></select></td><td><input class="textbox" type="text" placeholder="Degree Name" name="degree[]"></td><td><input class="textbox" type="text" placeholder="University Name" name="university[]"></td><td><button type="button" name="remove" id="' + J + '" class="btn btn-danger btn_remove2">X</button ></tr > ');
+            });
+            $(document).on('click', '.btn_remove2', function() {
+                var button_id = $(this).attr("id");
+                $('#row2' + button_id + '').remove();
+            });
+
+        });
+    </script>
+
+    <h3>PATENT FILED:</h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field3">
+                    <tr>
+                        <td><input type="text" name="patent[]" placeholder="Enter Patent Filed" class="form-control patent_list" /></td>
+                        <td><button type="button" name="add3" id="add3" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add3').click(function() {
+                i++;
+                $('#dynamic_field3').append('<tr id="row3' + i + '"><td><input type="text" name="patent[]" placeholder="Enter Patent Filed" class="form-control patent_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove3">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove3', function() {
+                var button_id = $(this).attr("id");
+                $('#row3' + button_id + '').remove();
+            });
+
+        });
+    </script>
+
+    <h3>BOOKS PUBLISHES/ BOOK CHAPTERS/ MONOGRAPHS:</h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field4">
+                    <tr>
+                        <td><input type="text" name="books[]" placeholder="Enter Book" class="form-control book_list" /></td>
+                        <td><button type="button" name="add4" id="add4" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add4').click(function() {
+                i++;
+                $('#dynamic_field4').append('<tr id="row4' + i + '"><td><input type="text" name="books[]" placeholder="Enter Book" class="form-control book_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove4">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove4', function() {
+                var button_id = $(this).attr("id");
+                $('#row4' + button_id + '').remove();
+            });
+
+        });
+    </script>
+    <h3>PAPERS PUBLISHED:</h3>
+    <h4>International Journal Publications:</h4>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field5">
+                    <tr>
+                        <td><input type="text" name="journal[]" placeholder="Enter Journal Publication" class="form-control journal_list" /></td>
+                        <td><button type="button" name="add5" id="add5" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add5').click(function() {
+                i++;
+                $('#dynamic_field5').append('<tr id="row5' + i + '"><td><input type="text" name="journal[]" placeholder="Enter Journal Publication" class="form-control journal_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove5">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove5', function() {
+                var button_id = $(this).attr("id");
+                $('#row5' + button_id + '').remove();
+            });
+
+        });
+    </script>
+    <h4>International Conference Publications:</h4>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field6">
+                    <tr>
+                        <td><input type="text" name="Iconference[]" placeholder="Enter International Conference Publication" class="form-control iconference_list" /></td>
+                        <td><button type="button" name="add6" id="add6" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add6').click(function() {
+                i++;
+                $('#dynamic_field6').append('<tr id="row6' + i + '"><td><input type="text" name="Iconference[]" placeholder="Enter International Conference Publication" class="form-control iconference_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove6">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove6', function() {
+                var button_id = $(this).attr("id");
+                $('#row6' + button_id + '').remove();
+            });
+
+        });
+    </script>
+    <h4>National Conference Publications:</h4>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field7">
+                    <tr>
+                        <td><input type="text" name="Nconference[]" placeholder="Enter National Conference Publication" class="form-control nconference_list" /></td>
+                        <td><button type="button" name="add7" id="add7" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add7').click(function() {
+                i++;
+                $('#dynamic_field7').append('<tr id="row7' + i + '"><td><input type="text" name="Nconference[]" placeholder="Enter National Conference Publication" class="form-control nconference_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove7">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove7', function() {
+                var button_id = $(this).attr("id");
+                $('#row7' + button_id + '').remove();
+            });
+
+        });
+    </script>
+
+    <h3>FDP's ATTENDED / CONDUCTED : </h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field8">
+                    <tr>
+                        <td><input type="text" name="fdp[]" placeholder="Enter FDP Attended Or Conducted" class="form-control fdp_list" /></td>
+                        <td><button type="button" name="add8" id="add8" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add8').click(function() {
+                i++;
+                $('#dynamic_field8').append('<tr id="row8' + i + '"><td><input type="text" name="fdp[]" placeholder="Enter FDP Attended Or Conducted" class="form-control fdp_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove8">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove8', function() {
+                var button_id = $(this).attr("id");
+                $('#row8' + button_id + '').remove();
+            });
+
+        });
+    </script>
+
+    <h3>WEBINARS :</h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field9">
+                    <tr>
+                        <td><input type="text" name="webinar[]" placeholder="Enter Webinars" class="form-control webinar_list" /></td>
+                        <td><button type="button" name="add9" id="add9" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add9').click(function() {
+                i++;
+                $('#dynamic_field9').append('<tr id="row9' + i + '"><td><input type="text" name="webinar[]" placeholder="Enter Webinars" class="form-control webinar_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove9">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove9', function() {
+                var button_id = $(this).attr("id");
+                $('#row9' + button_id + '').remove();
+            });
+
+        });
+    </script>
+
+    <h3>WORKSHOPS : </h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field10">
+                    <tr>
+                        <td><input type="text" name="workshop[]" placeholder="Enter Workshop" class="form-control workshop_list" /></td>
+                        <td><button type="button" name="add10" id="add10" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add10').click(function() {
+                i++;
+                $('#dynamic_field10').append('<tr id="row10' + i + '"><td><input type="text" name="workshop[]" placeholder="Enter Workshop" class="form-control workshop_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove10">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove10', function() {
+                var button_id = $(this).attr("id");
+                $('#row10' + button_id + '').remove();
+            });
+
+        });
+    </script>
+
+    <h3>PROFESSIONAL MEMBERSHIPS : </h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field11">
+                    <tr>
+                        <td><input type="text" name="membership[]" placeholder="Enter Membership" class="form-control membership_list" /></td>
+                        <td><button type="button" name="add11" id="add11" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add11').click(function() {
+                i++;
+                $('#dynamic_field11').append('<tr id="row11' + i + '"><td><input type="text" name="membership[]" placeholder="Enter Membership" class="form-control membership_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove11">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove11', function() {
+                var button_id = $(this).attr("id");
+                $('#row11' + button_id + '').remove();
+            });
+
+        });
+    </script>
+
+    <h3>ANY OTHER ACHIEVEMENTS: </h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field12">
+                    <tr>
+                        <td><input type="text" name="achievement[]" placeholder="Enter Achievement" class="form-control achievement_list" /></td>
+                        <td><button type="button" name="add12" id="add12" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add12').click(function() {
+                i++;
+                $('#dynamic_field12').append('<tr id="row12' + i + '"><td><input type="text" name="achievement[]" placeholder="Enter Achievement" class="form-control achievement_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove12">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove12', function() {
+                var button_id = $(this).attr("id");
+                $('#row12' + button_id + '').remove();
+            });
+
+        });
+    </script>
+
+    <h3>ONLINE QUIZZES : </h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field13">
+                    <tr>
+                        <td><input type="text" name="quiz[]" placeholder="Enter Quiz Name" class="form-control quiz_list" /></td>
+                        <td><button type="button" name="add13" id="add13" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add13').click(function() {
+                i++;
+                $('#dynamic_field13').append('<tr id="row13' + i + '"><td><input type="text" name="quiz[]" placeholder="Enter Quiz Name" class="form-control quiz_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove13">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove13', function() {
+                var button_id = $(this).attr("id");
+                $('#row13' + button_id + '').remove();
+            });
+
+        });
+    </script>
+
+    <h3>CERTIFICATIONS : </h3>
+    <div class="container">
+        <div class="form-group">
+            <div class="table-responsive">
+                <table class="table " id="dynamic_field14">
+                    <tr>
+                        <td><input type="text" name="certification[]" placeholder="Enter Certification" class="form-control certification_list" /></td>
+                        <td><button type="button" name="add14" id="add14" class="btn btn-success">Add More</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        
+        $(document).ready(function() {
+            var i = 1;
+            $('#add14').click(function() {
+                i++;
+                $('#dynamic_field14').append('<tr id="row14' + i + '"><td><input type="text" name="certification[]" placeholder="Enter Certification" class="form-control certification_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove14">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove14', function() {
+                var button_id = $(this).attr("id");
+                $('#row14' + button_id + '').remove();
+            });
+
+        });
+    </script>
+    <span class="warning"> Note:
+        <li>To check preview of pdf click preview button below, if more space is available you can add some more values in the form  </li>
+        <li>If the values or not sufficient remove the fields in the form to get pdf adjusted</li>
+        <li>When you are ready to upload the pdf, always download the best preview version which is opened in the new tab</li>
+    </span>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <a class="btn btn-primary" style="width:205px;height:50px;font-size:18px;float: right;margin-right: 100px;text-align: center;" href="sample" role="button"
+        target="_blank">Upload your pdf Here</a>
+
+    <button style="width:205px;height:50px;font-size:18px;float: left;left: auto;font-stretch: ultra-expanded;background-color:rgb(12, 87, 133);" type="button" class="sum" onclick="display()">Preview PDF</button>
+
+    <br><br><br><br><br><br><br>
+
+
+
+
+
+
+    </form>
+
+
+
+
+    </div>
+
+</body>    
+</html>
